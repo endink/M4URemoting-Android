@@ -1,0 +1,128 @@
+import java.time.LocalDate
+
+/*
+ * Copyright 2022 The TensorFlow Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *             http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'de.undercouch.download'
+}
+
+
+android {
+    namespace 'com.labijie.m4u'
+    compileSdk 33
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "M4URemoting_" + LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")) + ".apk"
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.labijie.m4u"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type.
+            minifyEnabled true
+            zipAlignEnabled true
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+// import DownloadMPTasks task
+project.ext.ASSET_DIR = projectDir.toString() + '/src/main/assets'
+project.ext.TEST_ASSETS_DIR = projectDir.toString() + '/src/androidTest/assets'
+
+apply from: 'download_tasks.gradle'
+
+
+
+dependencies {
+
+    def nav_version = "2.5.3"
+    def slf4j_version = "2.0.7"
+    def logback_android_version = "3.0.0"
+
+    // Kotlin lang
+    implementation 'androidx.core:core-ktx:1.8.0'
+
+    implementation "org.slf4j:slf4j-api:$slf4j_version"
+    implementation "com.github.tony19:logback-android:$logback_android_version"
+
+    // App compat and UI things
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.fragment:fragment-ktx:1.5.4'
+    implementation 'androidx.preference:preference:1.2.0'
+
+    // Navigation library
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // CameraX core library
+    def camerax_version = '1.2.0-alpha02'
+    implementation "androidx.camera:camera-core:$camerax_version"
+
+    // CameraX Camera2 extensions
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+
+    // CameraX Lifecycle library
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+
+    // CameraX View class
+    implementation "androidx.camera:camera-view:$camerax_version"
+
+    // WindowManager
+    implementation 'androidx.window:window:1.0.0'
+
+    // Unit testing
+    testImplementation 'junit:junit:4.13.2'
+
+    // Instrumented testing
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Mediapipe Library
+    implementation 'com.google.mediapipe:tasks-vision:0.1.0-alpha-7'
+    implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
+}

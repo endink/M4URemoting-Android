@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settings_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/rv_demo1_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Inference time row -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bottom_sheet_default_row_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/settings_host_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/settings_host_label"
+                android:textSize="@dimen/bottom_sheet_text_size" />
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/host_input_layout"
+               android:layout_marginLeft="150dp"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/host_input"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_centerVertical="true"
+                   android:gravity="right"
+                   android:text="127.0.0.1"
+                   android:textSize="@dimen/bottom_sheet_text_size" />
+           </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bottom_sheet_default_row_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/settings_port_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/settings_port_label"
+                android:textSize="@dimen/bottom_sheet_text_size" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/port_input_layout"
+                android:layout_marginLeft="150dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/port_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="right"
+                    android:text="23062"
+                    android:textSize="@dimen/bottom_sheet_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/bottom_sheet_default_row_margin"-->
+<!--            android:orientation="horizontal">-->
+<!--            <Button-->
+<!--                android:id="@+id/test_connection"-->
+<!--                android:layout_marginLeft="150dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="@string/connect_button_text"/>-->
+<!--        </RelativeLayout>-->
+
+        <!-- ML confidence threshold adjustment row -->
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bottom_sheet_default_row_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/settings_show_face_label"
+
+                android:textSize="@dimen/bottom_sheet_text_size" />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/show_face"
+                android:layout_marginLeft="150dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true">
+
+            </androidx.appcompat.widget.SwitchCompat>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bottom_sheet_default_row_margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/label_hand_detection_confidence_threshold"
+                android:textSize="@dimen/bottom_sheet_text_size" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/detection_threshold_minus"
+                    android:layout_width="@dimen/bottom_sheet_control_btn_size"
+                    android:layout_height="@dimen/bottom_sheet_control_btn_size"
+                    android:contentDescription="@string/alt_bottom_sheet_threshold_button_minus"
+                    android:src="@drawable/ic_minus" />
+
+                <TextView
+                    android:id="@+id/detection_threshold_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/bottom_sheet_control_text_side_margin"
+                    android:layout_marginRight="@dimen/bottom_sheet_control_text_side_margin"
+                    android:gravity="center"
+                    android:minEms="@integer/bottom_sheet_control_text_min_ems"
+                    android:textSize="@dimen/bottom_sheet_text_size" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/detection_threshold_plus"
+                    android:layout_width="@dimen/bottom_sheet_control_btn_size"
+                    android:layout_height="@dimen/bottom_sheet_control_btn_size"
+                    android:contentDescription="@string/alt_bottom_sheet_threshold_button_plus"
+                    android:src="@drawable/ic_plus" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bottom_sheet_default_row_margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/label_hand_tracking_confidence_threshold"
+                android:textSize="@dimen/bottom_sheet_text_size" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/tracking_threshold_minus"
+                    android:layout_width="@dimen/bottom_sheet_control_btn_size"
+                    android:layout_height="@dimen/bottom_sheet_control_btn_size"
+                    android:contentDescription="@string/alt_bottom_sheet_threshold_button_minus"
+                    android:src="@drawable/ic_minus" />
+
+                <TextView
+                    android:id="@+id/tracking_threshold_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/bottom_sheet_control_text_side_margin"
+                    android:layout_marginRight="@dimen/bottom_sheet_control_text_side_margin"
+                    android:gravity="center"
+                    android:minEms="@integer/bottom_sheet_control_text_min_ems"
+                    android:textSize="@dimen/bottom_sheet_text_size" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/tracking_threshold_plus"
+                    android:layout_width="@dimen/bottom_sheet_control_btn_size"
+                    android:layout_height="@dimen/bottom_sheet_control_btn_size"
+                    android:contentDescription="@string/alt_bottom_sheet_threshold_button_plus"
+                    android:src="@drawable/ic_plus" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bottom_sheet_default_row_margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/label_hand_presence_confidence_threshold"
+                android:textSize="@dimen/bottom_sheet_text_size" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/presence_threshold_minus"
+                    android:layout_width="@dimen/bottom_sheet_control_btn_size"
+                    android:layout_height="@dimen/bottom_sheet_control_btn_size"
+                    android:contentDescription="@string/alt_bottom_sheet_threshold_button_minus"
+                    android:src="@drawable/ic_minus" />
+
+                <TextView
+                    android:id="@+id/presence_threshold_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/bottom_sheet_control_text_side_margin"
+                    android:layout_marginRight="@dimen/bottom_sheet_control_text_side_margin"
+                    android:gravity="center"
+                    android:minEms="@integer/bottom_sheet_control_text_min_ems"
+                    android:textSize="@dimen/bottom_sheet_text_size" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/presence_threshold_plus"
+                    android:layout_width="@dimen/bottom_sheet_control_btn_size"
+                    android:layout_height="@dimen/bottom_sheet_control_btn_size"
+                    android:contentDescription="@string/alt_bottom_sheet_threshold_button_plus"
+                    android:src="@drawable/ic_plus" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- Delegate selection row -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bottom_sheet_default_row_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_delegate"
+                android:textSize="@dimen/bottom_sheet_text_size" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_delegate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:entries="@array/delegate_spinner_titles"
+                android:minWidth="@dimen/bottom_sheet_spinner_delegate_min_width"
+                android:spinnerMode="dropdown"
+                android:theme="@style/BottomSheetSpinnerItemStyle" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
