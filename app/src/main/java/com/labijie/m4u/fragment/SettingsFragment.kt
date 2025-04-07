@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Anders Xiao. All rights reserved.
+// https://github.com/endink
 package com.labijie.m4u.fragment
 
 import android.os.Bundle
@@ -6,17 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.labijie.m4u.R
 import com.labijie.m4u.SettingsViewModel
 import com.labijie.m4u.databinding.FragmentSettingsBinding
-import com.labijie.m4u.osc.OSCClient
+import com.labijie.m4u.osc.MediaPipe4URemotingClient
 import org.slf4j.LoggerFactory
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -71,7 +68,7 @@ class SettingsFragment : Fragment() {
     private fun pingHost() : Boolean
     {
         return try {
-            OSCClient.sendCommand("ping")
+            MediaPipe4URemotingClient.sendFaceCommand("ping")
         } catch (e:Exception) {
             logger.warn("check host fault.\n $e")
             false

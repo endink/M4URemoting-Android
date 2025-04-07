@@ -14,11 +14,6 @@ import java.lang.reflect.InvocationTargetException
 /**
  *
  *
- * 装载旋转进度按钮位图的按钮，继承自[FloatingActionButton]
- *
- *
- *
- *
  * @author cpacm
  *
  */

@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Anders Xiao. All rights reserved.
+// https://github.com/endink
 package com.labijie.m4u.osc
 
 import com.illposed.osc.OSCBundle
@@ -10,12 +12,15 @@ import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.PortUnreachableException
 
-object OSCClient {
-    private val logger = LoggerFactory.getLogger(OSCClient::class.java)
+object MediaPipe4URemotingClient {
+    private val logger = LoggerFactory.getLogger(MediaPipe4URemotingClient::class.java)
     private var oscPortOut : OSCPortOut? = null
     private var host: String = ""
     private var port: Int = 0
     private var hasConnError = false;
+
+    private const val RemotingAddressPrefix = "/m4u"
+    private const val FaceAddressPrefix = "${RemotingAddressPrefix}/face"
 
     val connected: Boolean
     get() { return oscPortOut?.isConnected == true && !hasConnError }
@@ -71,7 +76,7 @@ object OSCClient {
         }
     }
 
-    fun send(result: FaceSolver.FaceSolverResult){
+    fun sendFaceBlendShapes(result: FaceSolver.FaceSolverResult){
         if(!result.result.faceBlendshapes().isPresent)
         {
             return
@@ -85,7 +90,7 @@ object OSCClient {
             try {
                 val bsMessage = OSCBundle()
                 val list = result.result.faceBlendshapes().get().first().map { it.score() }
-                bsMessage.addPacket(OSCMessage("/data/bs", list))
+                bsMessage.addPacket(OSCMessage("${FaceAddressPrefix}/bs", list))
                 oscPortOut?.send(bsMessage)
                 hasConnError = false
             } catch (ex: IOException) {
@@ -98,7 +103,7 @@ object OSCClient {
         }
     }
 
-    fun sendCommand(command: String): Boolean {
+    fun sendFaceCommand(command: String): Boolean {
         if(oscPortOut?.isConnected != true)
         {
             oscPortOut?.disconnect()
@@ -106,7 +111,7 @@ object OSCClient {
         }
         if (oscPortOut?.isConnected == true) {
             return try {
-                val msg = OSCMessage("/cmd/$command")
+                val msg = OSCMessage("/${FaceAddressPrefix}/$command")
                 oscPortOut?.send(msg)
                 hasConnError = false
                 true

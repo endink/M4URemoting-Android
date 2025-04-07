@@ -15,7 +15,7 @@
  */
 
 task downloadTaskFile(type: Download) {
-    src 'https://storage.googleapis.com/mediapipe-tasks/face_landmarker/face_landmarker_with_blendshapes.task?generation=1680802050950753'
+    src 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task'
     dest project.ext.ASSET_DIR + '/mpt.bytes'
     overwrite true
 }

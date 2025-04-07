@@ -28,27 +28,6 @@ import com.labijie.m4u.R
 /**
  *
  *
- * 浮动音乐菜单，可以显示歌曲封面和旋转动画并随着音乐显示进度。
- *
- *  *
- * [.toggle] 切换菜单的展开收缩状态<br></br>
- *
- *  *
- * [.setProgress] 设置进度
- *
- *  *
- * [.setFloatingDirection] 设置展开方向
- *
- *  *
- * [/][.setMusicCover] 设置封面
- *
- *  *
- * [.start] 开始旋转动画 <br></br>
- * [.stop] 停止旋转动画
- *
- *
- *
- *
  *
  * 可以通过调用 [.addButton] 和 [.removeButton] 来动态增减按钮数量。
  *

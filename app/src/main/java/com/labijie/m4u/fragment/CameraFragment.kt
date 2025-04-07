@@ -1,18 +1,6 @@
-/*
- * Copyright 2022 The TensorFlow Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *             http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright (c) 2025 Anders Xiao. All rights reserved.
+// https://github.com/endink
+
 package com.labijie.m4u.fragment
 
 import android.annotation.SuppressLint
@@ -38,10 +26,9 @@ import com.illposed.osc.transport.OSCPortOut
 import com.labijie.m4u.*
 import com.labijie.m4u.R
 import com.labijie.m4u.databinding.FragmentCameraBinding
-import com.labijie.m4u.osc.OSCClient
+import com.labijie.m4u.osc.MediaPipe4URemotingClient
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -105,7 +92,7 @@ class CameraFragment : Fragment(),
             }
         }
         backgroundExecutor.execute {
-            OSCClient.connect(viewModel.oscHost, viewModel.oscPort)
+            MediaPipe4URemotingClient.connect(viewModel.oscHost, viewModel.oscPort)
         }
     }
 
@@ -119,7 +106,7 @@ class CameraFragment : Fragment(),
         if (_oscPortOut?.isConnected == true) {
             backgroundExecutor.execute {
                 // Close the Gesture Recognizer helper and release resources
-                backgroundExecutor.execute { OSCClient.disconnect() }
+                backgroundExecutor.execute { MediaPipe4URemotingClient.disconnect() }
             }
         }
     }
@@ -153,13 +140,13 @@ class CameraFragment : Fragment(),
 
     private fun onCalibrationClicked(){
         backgroundExecutor.execute{
-            OSCClient.sendCommand(RemotingCommands.FaceCalibrationCommand)
+            MediaPipe4URemotingClient.sendFaceCommand(RemotingCommands.FaceCalibrationCommand)
         }
     }
 
     private fun onUnCalibrationClicked(){
         backgroundExecutor.execute{
-            OSCClient.sendCommand(RemotingCommands.FaceUnCalibrationCommand)
+            MediaPipe4URemotingClient.sendFaceCommand(RemotingCommands.FaceUnCalibrationCommand)
         }
     }
 
@@ -286,7 +273,7 @@ class CameraFragment : Fragment(),
     // hands are seen in the camera frame, only one will be processed.
     override fun onResults(result: FaceSolver.FaceSolverResult) {
         backgroundExecutor.execute {
-            OSCClient.send(result)
+            MediaPipe4URemotingClient.sendFaceBlendShapes(result)
         }
         activity?.runOnUiThread {
             if (_fragmentCameraBinding != null) {

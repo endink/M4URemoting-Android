@@ -13,12 +13,6 @@ import android.os.Message
 /**
  *
  *
- * 可旋转的进度条位图，继承自 [Drawable] <br></br>
- * 原理：利用 [BitmapShader] 绘制出圆形图案，周围留出空白以便绘制进度条。
- *
- *
- *
- *
  * @author cpacm
  *
  */

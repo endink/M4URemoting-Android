@@ -1,21 +1,5 @@
 import java.time.LocalDate
-
-/*
- * Copyright 2022 The TensorFlow Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *             http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+import java.time.format.DateTimeFormatter
 
 plugins {
     id 'com.android.application'
@@ -24,13 +8,24 @@ plugins {
 }
 
 
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile).tap {
+            configureEach {
+                options.compilerArgs << "-Xlint:unchecked"
+            }
+        }
+    }
+}
+
+
 android {
     namespace 'com.labijie.m4u'
-    compileSdk 33
+    compileSdk 34
 
-    android.applicationVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "M4URemoting_" + LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")) + ".apk"
+    android.applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach {
+            outputFileName = "M4URemoting_" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".apk"
         }
     }
 
@@ -57,11 +52,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures {
         viewBinding true
@@ -78,29 +73,30 @@ apply from: 'download_tasks.gradle'
 
 dependencies {
 
-    def nav_version = "2.5.3"
+    def nav_version = "2.6.0"
     def slf4j_version = "2.0.7"
     def logback_android_version = "3.0.0"
+    def camerax_version = '1.3.4'
+    def kotlin_version = "1.8.20"
 
     // Kotlin lang
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation "androidx.core:core-ktx:$kotlin_version"
 
     implementation "org.slf4j:slf4j-api:$slf4j_version"
     implementation "com.github.tony19:logback-android:$logback_android_version"
 
     // App compat and UI things
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.fragment:fragment-ktx:1.5.4'
-    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.preference:preference:1.2.1'
 
     // Navigation library
+    implementation 'androidx.fragment:fragment-ktx:1.8.6'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // CameraX core library
-    def camerax_version = '1.2.0-alpha02'
     implementation "androidx.camera:camera-core:$camerax_version"
 
     // CameraX Camera2 extensions
@@ -113,16 +109,16 @@ dependencies {
     implementation "androidx.camera:camera-view:$camerax_version"
 
     // WindowManager
-    implementation 'androidx.window:window:1.0.0'
+    implementation 'androidx.window:window:1.3.0'
 
     // Unit testing
     testImplementation 'junit:junit:4.13.2'
 
     // Instrumented testing
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
     // Mediapipe Library
-    implementation 'com.google.mediapipe:tasks-vision:0.1.0-alpha-7'
+    implementation 'com.google.mediapipe:tasks-vision:0.20230731'
     implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
 }
